@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Golf | Download App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Color Variables */
+        :root {
+            --primary-color: #015d8f;
+            --primary-dark: #014a73;
+            --text-dark: #171a20;
+            --text-light: #555;
+            --text-lighter: #888;
+            --bg-light: #f7f7f7;
+            --bg-section: #f7f9fa;
+            --white: #ffffff;
+            --footer-bg: #171a20;
+            --accent-teal: #4ed9c1;
+        }
+
+        body {
+            font-family: 'Jura', sans-serif;
+            background-color: #060a0a;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 30px 50px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1020;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            filter: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .btn-rent-nav {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+            z-index: 1020;
+        }
+
+        .btn-rent-nav svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s;
+            stroke: var(--white);
+        }
+
+        .btn-rent-nav:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-rent-nav:hover svg {
+            transform: translate(2px, -2px);
+            stroke: var(--primary-color);
+        }
+
+        /* Menu Toggle Icon - Two lines that turn into X when clicked */
+        .menu-toggle {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: transparent;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 1100;
+            background-color: transparent;
+            /* Make background transparent */
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            background-color: var(--white);
+            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            width: 100%;
+        }
+
+        .menu-toggle span:nth-child(1) {
+            transform: translateY(-6px);
+            width: 100%;
+        }
+
+        .menu-toggle span:nth-child(2) {
+            transform: translateY(6px);
+            width: 100%;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+            transform: rotate(45deg);
+
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            transform: rotate(-45deg);
+            width: 100%;
+        }
+
+        /* Fullscreen Overlay Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 999;
+            /* Lower z-index for the overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-links {
+            list-style: none;
+            text-align: center;
+        }
+
+        .menu-links li {
+            margin: 25px 0;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .menu-overlay.open .menu-links li {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .menu-links a {
+            font-size: 32px;
+            font-weight: 300;
+            text-decoration: none;
+            color: var(--white);
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .menu-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: flex-start;
+            text-align: center;
+            color: white;
+            background: linear-gradient(to bottom, rgba(6, 10, 10, 0.4), rgba(6, 10, 10, 0.8)),
+                url('./images/ffb8f9b298a87e95634ff37d8390a6c7a9ad541c (1).png');
+            background-size: cover;
+            background-position: center;
+            padding: 180px 20px 80px;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 900px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        /* App Store Buttons - Hero Section */
+        .hero-section .download-container {
+
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 0;
+            flex-wrap: nowrap;
+        }
+
+        .hero-section .store-btn img {
+            width: 200px;
+            height: auto;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-section .store-btn:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 80px 10% 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) 1.5fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: var(--text-lighter);
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-info p {
+            font-size: 14px;
+            color: var(--text-lighter);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        /* Download buttons in footer - smaller size */
+        .footer-column .download-buttons {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-column .store-btn img {
+            width: 160px;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .footer-column .store-btn:hover img {
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom-line {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            filter: none;
+        }
+
+        .legal-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .legal-links a {
+            color: var(--text-lighter);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+
+            .hero-section .store-btn img {
+                width: 180px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-title {
+                text-align: center;
+
+            }
+
+            .hero-section {
+                padding-top: 160px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+
+                padding: 20px 25px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+                margin-bottom: 30px;
+            }
+
+            .hero-section {
+                padding-top: 140px;
+            }
+
+            .hero-section .download-container {
+
+                gap: 15px;
+            }
+
+            .hero-section .store-btn img {
+                width: 160px;
+            }
+
+            .menu-links a {
+                font-size: 24px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom-line {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-logo img {
+                height: 40px;
+            }
+
+            .legal-links {
+                justify-content: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .footer-column .store-btn img {
+                width: 130px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-section {
+                padding-top: 130px;
+            }
+
+            .hero-section .download-container {
+
+                gap: 12px;
+            }
+
+            .hero-section .store-btn img {
+                width: 140px;
+            }
+
+            .footer-column .store-btn img {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 24px;
+                margin-bottom: 25px;
+            }
+
+            .hero-section {
+                padding-top: 120px;
+            }
+
+            .hero-section .download-container {
+                gap: 10px;
+            }
+
+            .hero-section .store-btn img {
+                width: 130px;
+                border-radius: 8px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .menu-toggle {
+                width: 25px;
+                height: 25px;
+            }
+
+            .footer-column .store-btn img {
+                width: 110px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-section .download-container {
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .hero-section .store-btn img {
+                width: 120px;
+            }
+
+            .hero-title {
+                font-size: 22px;
+            }
+
+            .footer-column .store-btn img {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Luxury Golf Logo" loading="lazy">
+        </a>
+        <div class="nav-right">
+            <a href="#" class="btn-rent-nav">
+                Lets Rent
+
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+            </a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Overlay Menu -->
+    <div class="menu-overlay" id="menuOverlay">
+        <ul class="menu-links">
+            <li style="transition-delay: 0.1s;"><a href="index.html">Home</a></li>
+            <li style="transition-delay: 0.2s;"><a href="#">Services</a></li>
+            <li style="transition-delay: 0.3s;"><a href="#">Why Us?</a></li>
+            <li style="transition-delay: 0.4s;"><a href="#">About Us</a></li>
+            <li style="transition-delay: 0.5s;"><a href="#">Contact</a></li>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section ">
+
+        <div class="hero-content">
+            <h1 class="hero-title">Your Golf Car is ready!<br>Just Download the App for iOS/Android</h1>
+            <div class="download-container">
+                <a href="#" class="store-btn">
+                    <img src="images/Store=App Store, Type=Dark, Language=Dutch.svg" alt="App Store">
+                </a>
+                <a href="#" class="store-btn">
+                    <img src="images/Store=Google Play, Type=Dark, Language=English.svg" alt="Google Play">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Rent Service</h3>
+                <ul>
+                    <li><a href="#">Request Rent</a></li>
+                    <li><a href="#">Rent History</a></li>
+                    <li><a href="#">Pending Rent</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Fix Service</h3>
+                <ul>
+                    <li><a href="#">Request Fix</a></li>
+                    <li><a href="#">Fix History</a></li>
+                    <li><a href="#">Pending Fix</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Garage Service</h3>
+                <ul>
+                    <li><a href="#">Request Garage</a></li>
+                    <li><a href="#">Garage History</a></li>
+                    <li><a href="#">Pending Garage</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Event Service</h3>
+                <ul>
+                    <li><a href="#">Event Rent</a></li>
+                    <li><a href="#">Event History</a></li>
+                    <li><a href="#">Pending Event</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact-info">
+                <h3>Contact Us</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Paradise Island, FL 33139</p>
+                <p><i class="fa-solid fa-phone"></i> +20 (01) 555-1234</p>
+                <p><i class="fa-solid fa-envelope"></i> info@Luxurygolf.com</p>
+                <div class="download-buttons">
+                    <a href="https://www.apple.com/app-store/" class="store-btn">
+                        <img src="images/Store=App Store, Type=Dark, Language=Dutch.svg" alt="App Store" loading="lazy">
+                    </a>
+                    <a href="https://play.google.com/store" class="store-btn">
+                        <img src="images/Store=Google Play, Type=Dark, Language=English.svg" alt="Google Play"
+                            loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-line">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="Luxury Golf Logo" loading="lazy">
+            </div>
+            <div class="legal-links">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Cookies</a>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        if (menuToggle && menuOverlay) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                menuOverlay.classList.toggle('open');
+            });
+
+            // Close menu when clicking a link
+            document.querySelectorAll('.menu-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    menuOverlay.classList.remove('open');
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
