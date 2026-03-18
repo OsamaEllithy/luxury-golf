@@ -3,1438 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPREE | Minimal Experience</title>
-    <link href="https://fonts.cdnfonts.com/css/tesla-font" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap');
-
-        /* Color Variables */
-        :root {
-            --primary-color: #015d8f;
-            --primary-dark: #014a73;
-            --text-dark: #171a20;
-            --text-light: #555;
-            --text-lighter: #888;
-            --bg-light: #f7f7f7;
-            --bg-section: #f7f9fa;
-            --white: #ffffff;
-            --off-white-1: #f2f2f2;
-            --off-white-2: #e6e6e6;
-            --star-color: #ffc107;
-            --footer-bg: #171a20;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--white);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #9e9e9e;
-            border-radius: 5px;
-        }
-
-        body,
-        html {
-            background-color: var(--bg-light);
-            font-family: 'Jura', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            padding: 30px 50px;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            position: relative;
-            z-index: 1020;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .btn-rent-nav {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s;
-            position: relative;
-            z-index: 1020;
-        }
-
-        .btn-rent-nav svg {
-            width: 18px;
-            height: 18px;
-            transition: transform 0.3s;
-        }
-
-        .btn-rent-nav:hover {
-            color: var(--primary-color);
-        }
-
-        .btn-rent-nav:hover svg {
-            transform: translate(2px, -2px);
-        }
-
-        /* Menu Toggle Icon */
-        .menu-toggle {
-            width: 30px;
-            height: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-end;
-            cursor: pointer;
-            position: relative;
-            z-index: 1100;
-        }
-
-        .menu-toggle span {
-            display: block;
-            height: 2px;
-            background-color: var(--text-dark);
-            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-            width: 100%;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            transform: translateY(-6px) rotate(-45deg);
-        }
-
-        /* Fullscreen Overlay Menu */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 1050;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-
-        .menu-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .menu-links {
-            list-style: none;
-            text-align: center;
-        }
-
-        .menu-links li {
-            margin: 25px 0;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-
-        .menu-overlay.open .menu-links li {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .menu-links a {
-            font-size: 32px;
-            font-weight: 300;
-            text-decoration: none;
-            color: var(--text-dark);
-            letter-spacing: 2px;
-            transition: color 0.3s;
-        }
-
-        .menu-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Hero Animations */
-        .bg-text {
-            opacity: 0;
-            animation: textFadeIn 1.5s ease-out forwards 0.6s;
-        }
-
-        .cart-image-wrapper {
-            opacity: 0;
-            animation: carEntrance 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.2s;
-        }
-
-        .hero-buttons {
-            opacity: 0;
-            animation: simpleFadeIn 1s ease-out forwards 0.9s;
-        }
-
-        .stats-container {
-            opacity: 0;
-            animation: slideUpFade 1s ease-out forwards 1.2s;
-        }
-
-        @keyframes textFadeIn {
-            from {
-                opacity: 0;
-                filter: blur(15px);
-            }
-            to {
-                opacity: 1;
-                filter: blur(0);
-            }
-        }
-
-        @keyframes carEntrance {
-            from {
-                opacity: 0;
-                transform: scale(0.6) translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        @keyframes simpleFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideUpFade {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Scroll Animation Class */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Hero Decoration */
-        .hero-deco {
-            position: absolute;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .hero-deco span {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .hero-deco.top-left {
-            top: 0;
-            left: 0;
-        }
-
-        .hero-deco.top-left span {
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-        }
-
-        .hero-deco.bottom-right {
-            bottom: 25%;
-            right: 0;
-        }
-
-        .hero-deco.bottom-right span {
-            bottom: 0;
-            right: 0;
-            transform: translate(50%, 50%);
-            border-color: rgba(1, 93, 143, 0.1);
-        }
-
-        .hero-deco span:nth-child(1) {
-            width: 150px;
-            height: 150px;
-        }
-
-        .hero-deco span:nth-child(2) {
-            width: 250px;
-            height: 250px;
-        }
-
-        .hero-deco span:nth-child(3) {
-            width: 350px;
-            height: 350px;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(to bottom right, var(--primary-color), var(--white));
-            overflow: hidden;
-        }
-
-        .bg-text {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Jura', sans-serif;
-            font-size: 14vw;
-            color: rgba(255, 255, 255, 0.2);
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .cart-image-wrapper {
-            width: 40%;
-            z-index: 1000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .cart-image-wrapper img {
-            width: 100%;
-            filter: drop-shadow(0 85px 95px rgba(0, 0, 0, 0.5));
-        }
-
-        .hero-buttons {
-            position: absolute;
-            left: 50px;
-            top: 65%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 10;
-        }
-
-        .btn-hero {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            width: fit-content;
-        }
-
-        .btn-blur {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: var(--text-dark);
-        }
-
-        .btn-blur:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: translateX(5px);
-        }
-
-        .btn-main {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 4px 15px rgba(1, 93, 143, 0.3);
-        }
-
-        .btn-main:hover {
-            background-color: var(--primary-dark);
-            transform: translateX(5px);
-            box-shadow: 0 6px 20px rgba(1, 93, 143, 0.4);
-        }
-
-        .stats-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            z-index: 20;
-        }
-
-        .stat-card {
-            flex: 1;
-            padding: 45px 50px;
-            text-align: center;
-        }
-
-        .stat-card:nth-child(1) {
-            background-color: var(--white);
-        }
-
-        .stat-card:nth-child(2) {
-            background-color: var(--off-white-1);
-        }
-
-        .stat-card:nth-child(3) {
-            background-color: var(--off-white-2);
-        }
-
-        .stat-card h3 {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 5px;
-        }
-
-        .stat-card p {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-light);
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 100px 50px;
-            background-color: var(--bg-section);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .features-title {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 70px;
-            text-align: center;
-            letter-spacing: -0.5px;
-            white-space: nowrap;
-        }
-
-        .features-title .highlight {
-            color: var(--primary-color);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .feature-card {
-            background-color: var(--white);
-            padding: 40px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card:nth-child(2) {
-            background-color: var(--primary-color);
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(1, 93, 143, 0.2);
-        }
-
-        .feature-card:nth-child(2) h3,
-        .feature-card:nth-child(2) p,
-        .feature-card:nth-child(2) .feature-icon {
-            color: var(--white);
-        }
-
-        .feature-card:nth-child(2):hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-        }
-
-        .feature-card h3 {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--text-light);
-        }
-
-        /* Serve Section */
-        .serve-section {
-            padding: 100px 50px;
-            background-color: var(--bg-section);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .serve-title {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 50px;
-            text-align: center;
-            white-space: nowrap;
-            font-size: clamp(28px, 7vw, 42px);
-        }
-
-        .serve-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            width: 100%;
-            max-width: 1400px;
-        }
-
-        .serve-card {
-            position: relative;
-            height: 400px;
-            border-radius: 16px;
-            overflow: hidden;
-            background-color: #eee;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 25px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .serve-card:hover {
-            transform: translateY(-5px);
-            background-color: var(--primary-color);
-        }
-
-        .serve-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.8) 100%);
-            z-index: 1;
-        }
-
-        .serve-card:hover .serve-overlay {
-            opacity: 0;
-        }
-
-        .serve-card h3 {
-            position: relative;
-            color: rgba(255, 255, 255, 1);
-            z-index: 2;
-            font-size: 24px;
-            font-weight: 600;
-            text-align: left;
-            margin-bottom: 0;
-        }
-
-        .serve-card p {
-            position: relative;
-            z-index: 2;
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: left;
-        }
-
-        .serve-card:hover h3,
-        .serve-card:hover p {
-            color: var(--white);
-        }
-
-        .serve-dots {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .serve-dot {
-            width: 14px;
-            height: 14px;
-            background-color: #d1d5db;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .serve-dot.active {
-            background-color: var(--primary-color);
-            width: 35px;
-            border-radius: 7px;
-        }
-
-        /* Why Choose Section */
-        .why-choose-section {
-            padding: 100px 50px;
-            background-color: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .why-deco {
-            position: absolute;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .why-deco span {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .why-deco.top-left {
-            top: 0;
-            left: 0;
-        }
-
-        .why-deco.top-left span {
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-        }
-
-        .why-deco.bottom-right {
-            bottom: 0;
-            right: 0;
-        }
-
-        .why-deco.bottom-right span {
-            bottom: 0;
-            right: 0;
-            transform: translate(50%, 50%);
-        }
-
-        .why-deco span:nth-child(1) {
-            width: 150px;
-            height: 150px;
-        }
-
-        .why-deco span:nth-child(2) {
-            width: 250px;
-            height: 250px;
-        }
-
-        .why-deco span:nth-child(3) {
-            width: 350px;
-            height: 350px;
-        }
-
-        .why-choose-container {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .why-choose-title {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 70px;
-            text-align: center;
-            white-space: nowrap;
-            font-size: clamp(28px, 7vw, 42px);
-        }
-
-        .why-choose-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            width: 100%;
-        }
-
-        .why-choose-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .why-choose-card:hover {
-            transform: translateY(-10px);
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .why-icon-box {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .why-icon-box svg {
-            width: 30px;
-            height: 30px;
-            color: var(--white);
-        }
-
-        .why-choose-card h3 {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 15px;
-        }
-
-        .why-choose-card p {
-            font-size: 15px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        /* About Us Section */
-        .about-section {
-            padding: 50px;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--bg-section);
-        }
-
-        .about-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            height: 100%;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 100px 100px;
-            border-radius: 50px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
-            background-image: url('./images/about.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .about-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(47, 47, 47, 0.93);
-            z-index: 1;
-        }
-
-        .about-title {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            font-size: 38px;
-            white-space: nowrap;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        .about-subtitle {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            font-size: 16px;
-            color: var(--white);
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .about-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            text-align: left;
-            width: 100%;
-        }
-
-        .about-content p {
-            font-size: 18px;
-            line-height: 1.8;
-            color: var(--white);
-        }
-
-        .about-content p span {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        /* Testimonials Section */
-        .testimonials-section {
-            padding: 100px 50px;
-            background-color: var(--bg-section);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .testimonials-container {
-            width: 95%;
-            max-width: 1300px;
-            background: linear-gradient(to top right, var(--primary-color), var(--white));
-            border-radius: 50px;
-            padding: 80px 60px;
-            position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-        }
-
-        .top-banner {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-radius: 25px;
-            font-size: 20px;
-            font-weight: 400;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            padding: 15px 30px;
-            white-space: normal;
-            text-align: center;
-            width: auto;
-            min-width: 300px;
-            max-width: 80%;
-            line-height: 1.6;
-        }
-
-        .top-banner span {
-            color: #171a20;
-            font-weight: 700;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 2px 8px;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0 2px;
-        }
-
-        .section-title {
-            color: var(--text-dark);
-            font-size: 34px;
-            margin-bottom: 50px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            color: var(--text-dark);
-            font-size: 24px;
-            margin: 0 0 12px 0;
-            font-weight: 600;
-        }
-
-        .stars {
-            color: var(--star-color);
-            font-size: 16px;
-            margin-bottom: 25px;
-        }
-
-        .testimonial-text {
-            color: var(--text-light);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 35px;
-        }
-
-        .user-block {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: auto;
-        }
-
-        .user-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-info h4 {
-            color: #333;
-            margin: 0;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .user-info p {
-            color: #777;
-            margin: 3px 0 0 0;
-            font-size: 13px;
-        }
-
-        .trust-bar {
-            background: rgba(240, 240, 240, 0.8);
-            border-radius: 25px;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .stat-group h3 {
-            color: var(--text-dark);
-            font-size: 24px;
-            margin: 8px 0;
-            font-weight: 700;
-        }
-
-        .stat-group p {
-            color: var(--text-lighter);
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .big-stars {
-            color: var(--star-color);
-            justify-content: center;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--footer-bg);
-            padding: 80px 10% 40px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr) 1.5fr;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .footer-column h3 {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 25px;
-            color: var(--white);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 15px;
-        }
-
-        .footer-column ul li a {
-            text-decoration: none;
-            color: var(--text-lighter);
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .contact-info p {
-            font-size: 14px;
-            color: var(--text-lighter);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .contact-info i {
-            color: var(--primary-color);
-            font-size: 18px;
-        }
-
-        .download-buttons {
-            margin-top: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .store-btn img {
-            width: 160px;
-            height: auto;
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-
-        .store-btn:hover img {
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom-line {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-logo img {
-            height: 50px;
-        }
-
-        .legal-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .legal-links a {
-            color: var(--text-lighter);
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--white);
-            text-decoration: none;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .social-icons a:hover {
-            background: var(--primary-color);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1100px) {
-            .cards-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .top-banner {
-                font-size: 18px;
-                min-width: 280px;
-                padding: 15px 25px;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .hero-section {
-                flex-direction: column;
-                justify-content: space-evenly;
-                padding-top: 80px;
-                padding-bottom: 100px;
-            }
-
-            .bg-text {
-                position: static;
-                transform: none;
-                order: 0;
-                font-size: 12vw;
-                margin-bottom: 0;
-            }
-
-            .cart-image-wrapper {
-                width: 70%;
-                order: 1;
-                margin-bottom: 0;
-            }
-
-            .hero-buttons {
-                position: relative;
-                left: auto;
-                top: auto;
-                transform: none;
-                flex-direction: row;
-                justify-content: center;
-                width: 100%;
-                order: 2;
-                gap: 15px;
-            }
-
-            .btn-hero {
-                padding: 14px 28px;
-                font-size: 15px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .features-section {
-                padding: 60px 25px;
-            }
-
-            .features-title {
-                font-size: clamp(26px, 6vw, 32px);
-                margin-bottom: 40px;
-            }
-
-            .serve-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .why-choose-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .why-choose-section {
-                padding: 80px 30px;
-            }
-
-            .about-section {
-                height: auto;
-                min-height: 100vh;
-                padding: 80px 25px;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .about-container {
-                padding: 40px;
-                height: auto;
-                max-height: none;
-                border-radius: 40px;
-            }
-
-            .about-title {
-                font-size: clamp(28px, 5vw, 32px);
-            }
-        }
-
-        @media (max-width: 992px) {
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .testimonials-container {
-                padding: 60px 40px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 25px;
-            }
-
-            .hero-section {
-                padding-top: 60px;
-            }
-
-            .cart-image-wrapper {
-                width: 85%;
-                max-width: 90%;
-            }
-
-            .bg-text {
-                font-size: 13vw;
-            }
-
-            .menu-links a {
-                font-size: 24px;
-            }
-
-            .stats-container {
-                width: 100%;
-            }
-
-            .stat-card {
-                flex: 1;
-                padding: 30px 15px;
-                min-width: auto;
-            }
-
-            .stat-card h3 {
-                font-size: 28px;
-            }
-
-            .stat-card p {
-                font-size: 12px;
-            }
-
-            .hero-buttons {
-                margin-bottom: 0;
-                flex-wrap: nowrap;
-                margin-bottom: 20px;
-            }
-
-            .btn-hero {
-                white-space: nowrap;
-                font-size: 13px;
-                padding: 12px 15px;
-            }
-
-            .btn-blur:hover,
-            .btn-main:hover {
-                transform: translateY(-3px);
-            }
-
-            .serve-grid {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                gap: 20px;
-                scrollbar-width: none;
-            }
-
-            .serve-grid::-webkit-scrollbar {
-                display: none;
-            }
-
-            .serve-card {
-                min-width: 100%;
-                scroll-snap-align: center;
-            }
-
-            .serve-dots {
-                display: flex;
-            }
-
-            .about-container {
-                padding: 30px 25px;
-                border-radius: 30px;
-            }
-
-            .about-content p {
-                font-size: 16px;
-            }
-
-            .why-choose-section {
-                padding: 60px 20px;
-            }
-
-            .why-choose-card {
-                padding: 25px;
-            }
-
-            .why-choose-title {
-                font-size: clamp(22px, 6.5vw, 28px);
-            }
-
-            .testimonials-section {
-                padding: 60px 20px;
-            }
-
-            .testimonials-container {
-                padding: 50px 25px;
-                border-radius: 40px;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .trust-bar {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .top-banner {
-                width: 90%;
-                min-width: auto;
-                font-size: 16px;
-                padding: 15px 20px;
-                line-height: 1.4;
-            }
-
-            .section-title {
-                font-size: 28px;
-                white-space: nowrap;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .serve-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .serve-card {
-                height: 400px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-bottom-line {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-
-            .footer-logo img {
-                height: 40px;
-            }
-
-            .testimonials-container {
-                padding: 40px 20px;
-                border-radius: 30px;
-            }
-
-            .card {
-                padding: 30px 20px;
-            }
-
-            .top-banner {
-                font-size: 15px;
-                padding: 12px 15px;
-            }
-
-            .section-title {
-                font-size: 24px;
-            }
-        }
-    </style>
+    <title>Luxury Golf | Luxury Golf Cart Rental & Services</title>
+
+    <meta name="title" content="Luxury Golf">
+    <meta name="description" content="Rent premium golf carts with SPREE. Over 10 years of experience serving resorts, compounds, and events. Download our app for easy booking.">
+    <meta name="keywords" content="golf cart rental, luxury golf carts, event golf carts, resort transportation, golf cart service, SPREE">
+    <meta name="author" content="Luxury Golf">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.spree.com/">
+    <meta property="og:title" content="Luxury Golf | Luxury Golf Cart Rental & Services">
+    <meta property="og:description" content="Rent premium golf carts with SPREE. Over 10 years of experience serving resorts, compounds, and events. Download our app for easy booking.">
+    <meta property="og:image" content="images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Luxury Golf">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.spree.com/">
+    <meta property="twitter:title" content="Luxury Golf | Luxury Golf Cart Rental & Services">
+    <meta property="twitter:description" content="Rent premium golf carts with SPREE. Over 10 years of experience serving resorts, compounds, and events. Download our app for easy booking.">
+    <meta property="twitter:image" content="images/og-image.jpg">
+    <link rel="icon" type="image/png" href="images/logo.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap">
+
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-    <!-- Navigation -->
+    <div id="toast" class="toast-notification">App will be available soon!</div>
+
     <nav>
-        <a href="#" class="logo">
-            <img src="images/logo.png" alt="Logo" loading="lazy">
+        <a href="/" class="logo" aria-label="Homepage" id="homeLink">
+            <img src="images/logo.webp" alt="Luxury Golf Logo" loading="lazy">
         </a>
         <div class="nav-right">
-            <a href="#" class="btn-rent-nav">
+            
+            <div class="theme-switch-wrapper" id="themeToggleDesktop">
+                <label class="theme-switch" for="theme-checkbox-desktop">
+                    <input type="checkbox" id="theme-checkbox-desktop" />
+                    <div class="slider">
+                        <div class="circle"><i class="fa-solid fa-moon"></i></div>
+                        <span class="switch-label">Dark</span>
+                    </div>
+                </label>
+            </div>
+
+            <a href="dwn.html" target="_blank" class="btn-rent-nav" id="navRentLink">
                 Lets Rent
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
                 </svg>
             </a>
+
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -1442,19 +64,27 @@
         </div>
     </nav>
 
-    <!-- Overlay Menu -->
     <div class="menu-overlay" id="menuOverlay">
         <ul class="menu-links">
-            <li style="transition-delay: 0.1s;"><a href="#">Home</a></li>
-            <li style="transition-delay: 0.2s;"><a href="#">Services</a></li>
-            <li style="transition-delay: 0.3s;"><a href="#">Why Us?</a></li>
-            <li style="transition-delay: 0.4s;"><a href="#">About Us</a></li>
-            <li style="transition-delay: 0.5s;"><a href="#">Contact</a></li>
+            <li style="transition-delay: 0.1s;"><a href="#home">Home</a></li>
+            <li style="transition-delay: 0.2s;"><a href="#services">Services</a></li>
+            <li style="transition-delay: 0.3s;"><a href="#why-us">Why Us?</a></li>
+            <li style="transition-delay: 0.4s;"><a href="#about-us">About Us</a></li>
+            <li style="transition-delay: 0.5s;"><a href="#contact">Contact</a></li>
+            
+            <div class="theme-switch-wrapper mobile" id="themeToggleMobile">
+                <label class="theme-switch" for="theme-checkbox-mobile">
+                    <input type="checkbox" id="theme-checkbox-mobile" />
+                    <div class="slider">
+                        <div class="circle"><i class="fa-solid fa-moon"></i></div>
+                        <span class="switch-label">Dark</span>
+                    </div>
+                </label>
+            </div>
         </ul>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" id="home">
         <div class="hero-deco top-left">
             <span></span><span></span><span></span>
         </div>
@@ -1463,7 +93,7 @@
         </div>
         <div class="bg-text">LUXURY GOLF</div>
         <div class="hero-buttons">
-            <a href="#" class="btn-hero btn-blur">
+            <a href="#" class="btn-hero btn-blur" id="downloadAppBtn">
                 Download App
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1471,7 +101,7 @@
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
             </a>
-            <a href="#" class="btn-hero btn-main">
+            <a href="#services" class="btn-hero btn-main" id="exploreServicesBtn">
                 Explore Services
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1480,7 +110,7 @@
             </a>
         </div>
         <div class="cart-image-wrapper">
-            <img src="images/freepik__professional-studio-photography-of-a-modern-electr__40355.png" alt="Golf Cart" loading="lazy">
+            <img src="images/hero-image.webp" alt="Luxury Golf Cart" loading="lazy">
         </div>
         <div class="stats-container">
             <div class="stat-card">
@@ -1498,7 +128,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
     <section class="features-section">
         <h2 class="features-title reveal">Proven , <span class="highlight">Trusted</span> , Reliable</h2>
         <div class="features-grid reveal">
@@ -1531,26 +160,25 @@
         </div>
     </section>
 
-    <!-- Serve Section -->
-    <section class="serve-section">
+    <section class="serve-section" id="services">
         <h2 class="serve-title reveal">What We Serve ?</h2>
         <div class="serve-grid reveal">
-            <div class="serve-card" style="background-image: url('images/fix.jpg');">
+            <div class="serve-card" style="background-image: url('images/fix.webp');">
                 <div class="serve-overlay"></div>
                 <h3>Rent</h3>
                 <p>Flexible golf car rentals for short-term and long-term needs.</p>
             </div>
-            <div class="serve-card" style="background-image: url('images/rent.jpg');">
+            <div class="serve-card" style="background-image: url('images/rent.webp');">
                 <div class="serve-overlay"></div>
                 <h3>Fix</h3>
                 <p>Expert golf car maintenance and repair services.</p>
             </div>
-            <div class="serve-card" style="background-image: url('images/event.png');">
+            <div class="serve-card" style="background-image: url('images/event.webp');">
                 <div class="serve-overlay"></div>
                 <h3>Event</h3>
                 <p>Flexible golf car rentals for short-term and long-term needs.</p>
             </div>
-            <div class="serve-card" style="background-image: url('images/garage.jpg');">
+            <div class="serve-card" style="background-image: url('images/garage.webp');">
                 <div class="serve-overlay"></div>
                 <h3>Garage</h3>
                 <p>Flexible golf car rentals for short-term and long-term needs.</p>
@@ -1564,8 +192,7 @@
         </div>
     </section>
 
-    <!-- Why Choose Section -->
-    <section class="why-choose-section">
+    <section class="why-choose-section" id="why-us">
         <div class="why-deco top-left">
             <span></span><span></span><span></span>
         </div>
@@ -1608,8 +235,7 @@
         </div>
     </section>
 
-    <!-- About Us Section -->
-    <section class="about-section">
+    <section class="about-section" id="about-us">
         <div class="about-container reveal">
             <h2 class="about-title reveal">About Us</h2>
             <p class="about-subtitle reveal">Your Trusted Partner in Golf Cart Rentals</p>
@@ -1621,7 +247,6 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
     <section class="testimonials-section">
         <div class="testimonials-container reveal">
             <div class="top-banner">
@@ -1634,7 +259,7 @@
                     <div class="stars">★★★★★</div>
                     <p class="testimonial-text">"Over the past three years, the team has consistently demonstrated a high level of professionalism in maintaining and servicing our golf carts across campus. Their reliability and prompt response have significantly enhanced daily operations."</p>
                     <div class="user-block">
-                        <img src="images/AUC.png" class="user-img" alt="AUC" loading="lazy">
+                        <img src="images/AUC.webp" class="user-img" alt="AUC" loading="lazy">
                         <div class="user-info">
                             <h4>AUC</h4>
                             <p>AUC Support Team • 3 weeks ago</p>
@@ -1646,7 +271,7 @@
                     <div class="stars">★★★★★</div>
                     <p class="testimonial-text">"We have successfully partnered with more than 30 international tourist resorts, delivering reliable golf cart maintenance and operational support. Our experience reflects a strong commitment to quality."</p>
                     <div class="user-block">
-                        <img src="images/AUC.png" class="user-img" alt="Michael" loading="lazy">
+                        <img src="images/AUC.webp" class="user-img" alt="Michael" loading="lazy">
                         <div class="user-info">
                             <h4>Michael Chen</h4>
                             <p>Resort Owner • 3 weeks ago</p>
@@ -1658,7 +283,7 @@
                     <div class="stars">★★★★★</div>
                     <p class="testimonial-text">"Best rental experience ever! The carts are modern, clean, and very well-maintained. Customer service was exceptional — they even delivered it right to our resort on time!"</p>
                     <div class="user-block">
-                        <img src="images/AUC.png" class="user-img" alt="Michael" loading="lazy">
+                        <img src="images/AUC.webp" class="user-img" alt="Michael" loading="lazy">
                         <div class="user-info">
                             <h4>Michael Chen</h4>
                             <p>Resort Guest • 3 weeks ago</p>
@@ -1686,39 +311,38 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
+        <div class="footer-content" id="contact">
             <div class="footer-column">
                 <h3>Rent Service</h3>
                 <ul>
-                    <li><a href="#">Request Rent</a></li>
-                    <li><a href="#">Rent History</a></li>
-                    <li><a href="#">Pending Rent</a></li>
+                    <li><a href="#services">Request Rent</a></li>
+                    <li><a href="#services">Rent History</a></li>
+                    <li><a href="#services">Pending Rent</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Fix Service</h3>
                 <ul>
-                    <li><a href="#">Request Fix</a></li>
-                    <li><a href="#">Fix History</a></li>
-                    <li><a href="#">Pending Fix</a></li>
+                    <li><a href="#services">Request Fix</a></li>
+                    <li><a href="#services">Fix History</a></li>
+                    <li><a href="#services">Pending Fix</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Garage Service</h3>
                 <ul>
-                    <li><a href="#">Request Garage</a></li>
-                    <li><a href="#">Garage History</a></li>
-                    <li><a href="#">Pending Garage</a></li>
+                    <li><a href="#services">Request Garage</a></li>
+                    <li><a href="#services">Garage History</a></li>
+                    <li><a href="#services">Pending Garage</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Event Service</h3>
                 <ul>
-                    <li><a href="#">Event Rent</a></li>
-                    <li><a href="#">Event History</a></li>
-                    <li><a href="#">Pending Event</a></li>
+                    <li><a href="#services">Event Rent</a></li>
+                    <li><a href="#services">Event History</a></li>
+                    <li><a href="#services">Pending Event</a></li>
                 </ul>
             </div>
             <div class="footer-column contact-info">
@@ -1727,105 +351,32 @@
                 <p><i class="fa-solid fa-phone"></i> +20 (01) 555-1234</p>
                 <p><i class="fa-solid fa-envelope"></i> info@Luxurygolf.com</p>
                 <div class="download-buttons">
-                    <a href="download.html" class="store-btn">
-                        <img src="images/Store=App Store, Type=Dark, Language=Dutch.svg" alt="App Store">
+                    <a href="#" class="store-btn" id="footerAppStoreBtn">
+                        <img src="images/Store=App Store, Type=Dark, Language=Dutch.svg" alt="Download on App Store" loading="lazy">
                     </a>
-                    <a href="https://play.google.com/store" class="store-btn">
-                        <img src="images/Store=Google Play, Type=Dark, Language=English.svg" alt="Google Play">
+                    <a href="#" class="store-btn" id="footerGooglePlayBtn">
+                        <img src="images/Store=Google Play, Type=Dark, Language=English.svg" alt="Get it on Google Play" loading="lazy">
                     </a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom-line">
             <div class="footer-logo">
-                <img src="images/logo.png" alt="Luxury Golf Logo">
+                <img src="images/logo.webp" alt="Luxury Golf Logo" loading="lazy">
             </div>
             <div class="legal-links">
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
-                <a href="#">Cookies</a>
+                <a href="#home">Terms</a>
+                <a href="#home">Privacy</a>
+                <a href="#home">Cookies</a>
             </div>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn" id="linkedinLink"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Facebook" id="facebookLink"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter" id="twitterLink"><i class="fa-brands fa-twitter"></i></a>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const menuOverlay = document.getElementById('menuOverlay');
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            menuOverlay.classList.toggle('open');
-        });
-        document.querySelectorAll('.menu-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                menuOverlay.classList.remove('open');
-            });
-        });
-
-        // Serve Section Slider Dots Logic
-        const serveGrid = document.querySelector('.serve-grid');
-        const serveDots = document.querySelectorAll('.serve-dot');
-        if (serveGrid && serveDots.length > 0) {
-            serveGrid.addEventListener('scroll', () => {
-                const scrollLeft = serveGrid.scrollLeft;
-                const cardWidth = serveGrid.clientWidth;
-                const activeIndex = Math.round(scrollLeft / cardWidth);
-                serveDots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === activeIndex);
-                });
-            });
-            serveDots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    const cardWidth = serveGrid.clientWidth;
-                    serveGrid.scrollTo({ left: cardWidth * index, behavior: 'smooth' });
-                });
-            });
-        }
-
-        // Scroll Reveal Animation
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal();
-
-        // Stats Counter Animation
-        setTimeout(() => {
-            const counters = document.querySelectorAll('.stat-card h3');
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const suffix = counter.getAttribute('data-suffix') || '';
-                const duration = 2000;
-                const stepTime = 20;
-                const steps = duration / stepTime;
-                const increment = target / steps;
-                let current = 0;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        counter.innerText = target + suffix;
-                        clearInterval(timer);
-                    } else {
-                        const displayValue = Number.isInteger(target) ? Math.ceil(current) : current.toFixed(1);
-                        counter.innerText = displayValue + suffix;
-                    }
-                }, stepTime);
-            });
-        }, 1500);
-    </script>
+<script src="js/main.js"></script>
 </body>
 </html>
